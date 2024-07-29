@@ -1,5 +1,4 @@
 import {
-  HomeIcon,
   ChartIcon,
   MailIcon,
   SettingsIcon,
