@@ -30,7 +30,7 @@ const ArticleList: React.FC = () => {
   }, [currentPage]);
 
   return (
-    <div>
+    <div className="p-2">
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       {!loading && !error && <DataTableDemo articles={articles} />}

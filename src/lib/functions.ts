@@ -1,17 +1,43 @@
-function convertDateFormat(inputDate: string): string {
-    const months: { [key: string]: string } = {
-      January: "Jan", February: "Feb", March: "Mar", April: "Apr", May: "May", June: "Jun",
-      July: "Jul", August: "Aug", September: "Sep", October: "Oct", November: "Nov", December: "Dec"
-    };
-  
-    // Split the input string by spaces to extract the parts
-    const parts = inputDate.split(" ");
-    const month = parts[0].replace(",", ""); // Remove the comma from the month
-    const day = parts[1].replace(",", ""); // Remove the comma from the day
-    const year = parts[2];
-  
-    const monthShort = months[month];
-  
-    return `${day} ${monthShort} ${year}`;
+function convertDateFormat(inputDate: string) {
+  const months: { [key: string]: string } = {
+    January: "Jan",
+    February: "Feb",
+    March: "Mar",
+    April: "Apr",
+    May: "May",
+    June: "Jun",
+    July: "Jul",
+    August: "Aug",
+    September: "Sep",
+    October: "Oct",
+    November: "Nov",
+    December: "Dec",
+  };
+
+  try {
+    let date;
+    if (inputDate && inputDate.trim() !== "") {
+      date = new Date(inputDate);
+
+      const day = isNaN(date.getDate())
+        ? "-"
+        : date.getDate().toString().padStart(2, "0");
+      const month = isNaN(date.getMonth())
+        ? "-"
+        : date.toLocaleString("default", { month: "long" });
+      const year = isNaN(date.getFullYear())
+        ? "-"
+        : date.getFullYear().toString();
+
+      const monthShort = months[month] || "-";
+
+      return `${day} ${monthShort} ${year}`;
+    } else {
+      return "---";
+    }
+  } catch (error: any) {
+    console.error(`Error processing date: ${error.message}`);
   }
-  export {convertDateFormat}
+}
+
+export { convertDateFormat };

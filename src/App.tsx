@@ -10,9 +10,7 @@ function App() {
         <Navbar />
         <main className="flex-1 sm:pl-64">
           <Header />
-          <div className="sm:p-4 p-2">
             <ArticleList />
-          </div>
         </main>
 
         <Toaster />

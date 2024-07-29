@@ -2,8 +2,21 @@ import React from "react";
 import { ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Table as ReactTable } from "@tanstack/react-table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { sectors } from "@/lib/types";
 
 interface TableFiltersProps {
   table: ReactTable<any>;
@@ -11,16 +24,36 @@ interface TableFiltersProps {
 
 const TableFilters: React.FC<TableFiltersProps> = ({ table }) => {
   return (
-    <div className="flex items-center py-4">
+    <div className="flex items-center py-4 gap-3">
       <Input
         placeholder="Filter..."
         value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-        onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
+        onChange={(event) =>
+          table.getColumn("title")?.setFilterValue(event.target.value)
+        }
         className="max-w-sm"
       />
+
+      <Select>
+        <SelectTrigger className="w-[180px] h-8">
+          <SelectValue placeholder="Sector" />
+        </SelectTrigger>
+        <SelectContent>
+          {sectors.map((sector) => (
+            <SelectItem
+              key={sector}
+              onSelect={() => table.getColumn("sector")?.setFilterValue(sector)}
+              value={sector}
+            >
+              {sector}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
+          <Button variant="outline" className="ml-auto h-8">
             Columns <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>

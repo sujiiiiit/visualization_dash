@@ -2,7 +2,8 @@
 import axios from "axios";
 import { DataType } from "./types";
 
-const API_URL =  "http://localhost:5000";
+// const API_URL =  "http://localhost:5000";
+const API_URL =  "https://blackcofferapi.vercel.app/api";
 
 export const fetchArticles = async (
   page: number = 1,

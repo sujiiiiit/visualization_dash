@@ -24,8 +24,8 @@ export default function Navbar() {
               to={item.link}
               className={`group  flex px-3 py-5 my-1 justify-start items-center rounded-md  transition-colors text-base md:h-8 ${
                 location.pathname == item.link
-                  ? "bg-black/10 dark:bg-white/10 text-foreground"
-                  : "hover:bg-black/10 dark:hover:bg-white/10 text-muted-foreground hover:text-foreground"
+                  ? "bg-muted text-foreground"
+                  : "hover:bg-muted text-muted-foreground hover:text-foreground"
               }`}
             >
               <item.icon className="h-5 w-5" />
