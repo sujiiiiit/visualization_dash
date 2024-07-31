@@ -40,4 +40,20 @@ function convertDateFormat(inputDate: string) {
   }
 }
 
-export { convertDateFormat };
+function findRegions(data:any) {
+  const regions = new Set();
+  const nonDuplicateRegions:any = [];
+
+  data.forEach((item: any) => {
+      if (!regions.has(item.region)) {
+          regions.add(item.region);
+          nonDuplicateRegions.push(item.region);
+      }
+  });
+
+  return nonDuplicateRegions;
+}
+
+
+
+export { convertDateFormat ,findRegions};

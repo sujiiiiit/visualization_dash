@@ -5,7 +5,7 @@ import {
   BlogIcon,
 } from "@/components/ui/icon";
 
-const sectors = [
+export const sectors = [
   "Energy",
   "Information Technology",
   "Retail",
@@ -18,7 +18,7 @@ const sectors = [
   "Manufacturing",
 ];
 
-const navItem = [
+export const navItem = [
   {
     title: "Blogs",
     link: "/",
@@ -42,26 +42,273 @@ const navItem = [
 ];
 
 export interface DataType {
-    _id: number;
-    end_year: string;
-    intensity: number;
-    sector: string;
-    top: string;
-    insights: string;
-    URL: string;
-    region: string;
-    start_year: string;
-    impact: string;
-    added: string;
-    published: string;
-    country: string;
-    relevance: number;
-    pestle: string;
-    source: string;
-    title: string;
-    likelihood: number;
-};
+  _id: number;
+  end_year: string;
+  intensity: number;
+  sector: string;
+  top: string;
+  insights: string;
+  url: string;
+  region: string;
+  start_year: string;
+  impact: string;
+  added: string;
+  published: string;
+  country: string;
+  relevance: number;
+  pestle: string;
+  source: string;
+  title: string;
+  likelihood: number;
+}
 
+export const regions = ["North America", "Europe", "Asia", "Australia"];
+export const endYears = [
+  2027, 2018, 2025, 2040, 2200, 2019, 2020, 2022, 2017, 2024, 2021, 2026, 2030,
+  2046, 2126, 2050, 2041, 2035, 2016, 2055, 2028, 2036, 2060, 2034, 2051,
+];
+export const pests = [
+  "Industries",
+  "Environmental",
+  "Economic",
+  "Political",
+  "Technological",
+  "Organization",
+  "Healthcare",
+  "Social",
+  "Lifestyles",
+];
+export const sources = [
+  "AHDB",
+  "SlideShare",
+  "VITA Technologies",
+  "Wall Street Daily",
+  "Bearnobull",
+  "CCN: Financial Bitcoin & Cryptocurrency News",
+  "IRENA",
+  "International Monetary Fund (IMF)",
+  "Arangkada Philippines",
+  "Global Information Inc",
+  "ID TECH INDEX",
+  "The Jamestown Foundation",
+  "savepassamaquoddybay",
+  "atradius",
+  "dailyquiddity",
+  "bankofengland",
+  "Futurity",
+  "Business Green",
+  "About Best Binary Options Strategy",
+  "IHS Engineering 360",
+  "European Council",
+  "Activist Post",
+  "Newsletter",
+  "U.S. Environmental Protection Agency",
+  "Global Money Trends Magazine",
+  "CAJ News Africa",
+  "Planetizen",
+  "CDC",
+  "Strategy & Formerly Booz & Company",
+  "PriceWaterhouseCoopers",
+  "News.com",
+  "Brookings Institute",
+  "Innovate UK",
+  "The Arab Gulf States Institute Washington",
+  "Embedded Computing Design",
+  "European Environment Agency",
+  "Industry Week",
+  "Atlantic Council",
+  "U.K. Ministry of Defense",
+  "Future in Focus",
+  "Australian Government Department of Defence",
+  "MIT Sloan Management Review",
+  "Scania Group",
+  "watercanada",
+  "Common Dreams",
+  "theicct",
+  "nbp",
+  "Thomson Reuters",
+  "University Chronicle",
+  "globalr2p",
+  "Robothub",
+  "New Security Beat",
+  "betterenergy",
+  "Real Estate Professional",
+  "Mind Commerce",
+  "Yahoo Finance",
+  "Pickens Plan",
+  "RUSI",
+  "Hardin Tibbs",
+  "World Health",
+  "environmentalpeacebuilding",
+  "greenerearthnews",
+  "conferenceseries",
+  "dailytexanonline",
+  "EPS News",
+  "The American Prospect",
+  "Face2face Africa",
+  "Oil and Gas Journal",
+  "Infracircle",
+  "uschamber",
+  "energy news cyprus",
+  "UNEP",
+  "Foreign Policy",
+  "Europe in My Region",
+];
+export const countries = [
+  "United States of America",
+  "Mexico",
+  "Nigeria",
+  "Lebanon",
+  "Russia",
+  "Saudi Arabia",
+  "Angola",
+  "Egypt",
+  "South Africa",
+  "India",
+  "Ukraine",
+  "Azerbaijan",
+  "China",
+  "Colombia",
+  "Niger",
+  "Libya",
+  "Brazil",
+  "Mali",
+  "Indonesia",
+  "Iraq",
+  "Iran",
+  "South Sudan",
+  "Venezuela",
+  "Burkina Faso",
+  "Germany",
+  "United Kingdom",
+  "Kuwait",
+  "Canada",
+  "Argentina",
+  "Japan",
+  "Austria",
+  "Spain",
+  "Estonia",
+  "Hungary",
+  "Australia",
+  "Morocco",
+  "Greece",
+  "Qatar",
+  "Oman",
+  "Liberia",
+  "Denmark",
+  "Malaysia",
+  "Jordan",
+  "Syria",
+  "Ethiopia",
+  "Norway",
+  "Ghana",
+  "Kazakhstan",
+  "Pakistan",
+  "Gabon",
+  "United Arab Emirates",
+  "Algeria",
+  "Turkey",
+  "Cyprus",
+  "Belize",
+  "Poland",
+];
 
-export { navItem, sectors };
-
+export const topics = [
+  "gas",
+  "oil",
+  "consumption",
+  "market",
+  "gdp",
+  "war",
+  "production",
+  "export",
+  "battery",
+  "biofuel",
+  "policy",
+  "economy",
+  "strategy",
+  "robot",
+  "growth",
+  "economic",
+  "energy",
+  "food",
+  "administration",
+  "unemployment",
+  "trade",
+  "demand",
+  "economic growth",
+  "industry",
+  "capital",
+  "worker",
+  "tension",
+  "terrorism",
+  "transport",
+  "peak oil",
+  "vehicle",
+  "tourist",
+  "artificial intelligence",
+  "climate",
+  "power",
+  "crisis",
+  "ice",
+  "population",
+  "politics",
+  "business",
+  "work",
+  "coal",
+  "gamification",
+  "finance",
+  "interest rate",
+  "risk",
+  "inflation",
+  "asylum",
+  "resource",
+  "plastic",
+  "electricity",
+  "bank",
+  "gasoline",
+  "car",
+  "money",
+  "technology",
+  "aquaculture",
+  "city",
+  "investment",
+  "revenue",
+  "emission",
+  "climate change",
+  "infrastructure",
+  "government",
+  "security",
+  "software",
+  "building",
+  "transportation",
+  "wealth",
+  "clothing",
+  "shortage",
+  "debt",
+  "agriculture",
+  "tax",
+  "carbon",
+  "brexit",
+  "workforce",
+  "change",
+  "automaker",
+  "nuclear",
+  "3D",
+  "water",
+  "data",
+  "fossil fuel",
+  "election",
+  "greenhouse gas",
+  "information",
+  "shale gas",
+  "factory",
+  "farm",
+  "communication",
+  "storm",
+  "consumer",
+  "material",
+  "Washington",
+  "pollution",
+  "fracking",
+].filter((topic, index, self) => topic && self.indexOf(topic) === index);
