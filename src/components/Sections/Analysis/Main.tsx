@@ -1,17 +1,21 @@
-import React from 'react';
+// components/ArticlesList.tsx
+import React, { useState } from "react";
+import { useArticles } from "@/hooks/useArticles";
+import YearChart from "@/components/Sections/Analysis/Charts/Year";
 
-interface Props {
-    // Define the props for your component here
-}
+const ArticlesList: React.FC = () => {
+  const [page] = useState<number>(1);
+  const filters = { limit: 1000 };
+  const { articles, loading, error } = useArticles({ page, filters });
 
-const MyComponent: React.FC<Props> = () => {
-    // Implement your component logic here
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-    return (
-        <div>
-            {/* JSX content for your component */}
-        </div>
-    );
+  return (
+    <div className="p-2">
+      <YearChart articles={articles} />
+    </div>
+  );
 };
 
-export default MyComponent;
+export default ArticlesList;
