@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchArticles, deleteMultipleRecords, deleteRecordById } from "@/lib/service";
+import {
+  fetchArticles,
+  deleteMultipleRecords,
+  deleteRecordById,
+} from "@/lib/service";
 import { DataType } from "@/lib/types";
 import {
   sectors,
@@ -12,6 +16,8 @@ import {
   sources,
   countries,
 } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -163,7 +169,9 @@ const ArticleList: React.FC = () => {
       const idsToDelete = Array.from(selectedIds);
       await deleteMultipleRecords(idsToDelete);
       setArticles((prevArticles) =>
-        prevArticles.filter((article) => !selectedIds.has(article._id.toString()))
+        prevArticles.filter(
+          (article) => !selectedIds.has(article._id.toString())
+        )
       );
       setSelectedIds(new Set());
       localStorage.setItem("selectedIds", JSON.stringify([]));
@@ -181,7 +189,10 @@ const ArticleList: React.FC = () => {
       setSelectedIds((prevIds) => {
         const updatedIds = new Set(prevIds);
         updatedIds.delete(id);
-        localStorage.setItem("selectedIds", JSON.stringify(Array.from(updatedIds)));
+        localStorage.setItem(
+          "selectedIds",
+          JSON.stringify(Array.from(updatedIds))
+        );
         return updatedIds;
       });
     } catch (error) {
@@ -236,113 +247,169 @@ const ArticleList: React.FC = () => {
         ))}
       </div>
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">Error: {error}</p>}
-      {!loading && !error && (
-        <div>
-          <div className="text-sm px-4 py-2 border border-b-0 rounded-t-lg flex justify-between items-center">
-            <div>Selected {selectedIds.size} out of {totalRecords} rows</div>
-            <div>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button size={"icon"} variant={"ghost"}>
-                    <DeleteIcon />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the selected records.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDeleteSelected}>
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+      {/* {loading && <p>Loading...</p>} */}
+      <div>
+        {!error ? (
+          <>
+            <div className="text-sm px-4 py-2 border border-b-0 rounded-t-lg flex justify-between items-center">
+              {loading ? (
+                <Skeleton className="h-8 w-64" />
+              ) : (
+                <>
+                  <div>
+                    Selected {selectedIds.size} out of {totalRecords} rows
+                  </div>
+                  <div>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button size={"icon"} variant={"ghost"}>
+                          <DeleteIcon />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete the selected records.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleDeleteSelected}>
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-          <Table className="border rounded-lg">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="px-4">
-                  <Checkbox
-                    checked={articles.every((article) =>
-                      selectedIds.has(String(article._id))
-                    )}
-                    onCheckedChange={(checked) =>
-                      handleHeaderCheckboxChange(Boolean(checked))
-                    }
-                  />
-                </TableHead>
-                <TableHead className="px-4">Title</TableHead>
-                <TableHead className="hidden sm:flex items-center">
-                  Published
-                </TableHead>
-                <TableHead>More</TableHead>
-                {/* Add other table headers as needed */}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {articles.map((article) => (
-                <TableRow
-                  key={article._id}
-                  className={`${
-                    selectedIds.has(String(article._id)) ? "bg-muted" : ""
-                  }`}
-                >
-                  <TableCell className="px-4">
+            <Table className="border rounded-lg">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="px-4">
                     <Checkbox
-                      checked={selectedIds.has(String(article._id))}
+                      checked={articles.every((article) =>
+                        selectedIds.has(String(article._id))
+                      )}
                       onCheckedChange={(checked) =>
-                        handleCheckboxChange(
-                          String(article._id),
-                          Boolean(checked)
-                        )
+                        handleHeaderCheckboxChange(Boolean(checked))
                       }
                     />
-                  </TableCell>
-                  <TableCell className="px-4 text-sm">
-                    <div className="flex flex-col gap-1">
-                    <span>{article.title}</span>
-                    <span className="text-xs sm:hidden">Published : {convertDateFormat(article.published)}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-nowrap hidden sm:flex">
-                    {convertDateFormat(article.published)}
-                  </TableCell>
-                  <TableCell className="px-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="w-8 h-8 hover:bg-muted flex justify-center items-center">
-                        <DotsHorizontalIcon className="h-4 w-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>More Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View/Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDeleteSingle(article._id.toString())}>
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                  </TableHead>
+                  <TableHead className="px-4">Title</TableHead>
+                  <TableHead className="hidden sm:flex items-center">
+                    Published
+                  </TableHead>
+                  <TableHead>More</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="text-sm px-4 py-2 border border-t-0 rounded-b-lg">
-            <PaginationDemo
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
-          </div>
-        </div>
-      )}
+              </TableHeader>
+              <TableBody>
+                {!loading ? (
+                  <>
+                    {articles.length == 0 && (
+                      <TableRow>
+                        <TableCell className="p-2 text-center">
+                          Not Found
+                        </TableCell>
+                      </TableRow>
+                    )}
+                    {articles.map((article) => (
+                      <TableRow
+                        key={article._id}
+                        className={`${
+                          selectedIds.has(String(article._id)) ? "bg-muted" : ""
+                        }`}
+                      >
+                        <TableCell className="px-4">
+                          <Checkbox
+                            checked={selectedIds.has(String(article._id))}
+                            onCheckedChange={(checked) =>
+                              handleCheckboxChange(
+                                String(article._id),
+                                Boolean(checked)
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className="px-4 text-sm">
+                          <div className="flex flex-col gap-1">
+                            <span>{article.title}</span>
+                            <span className="text-xs sm:hidden">
+                              Published : {convertDateFormat(article.published)}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-nowrap hidden sm:flex">
+                          {convertDateFormat(article.published)}
+                        </TableCell>
+                        <TableCell className="px-4">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger className="w-8 h-8 hover:bg-muted flex justify-center items-center">
+                              <DotsHorizontalIcon className="h-4 w-4" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              <DropdownMenuLabel>
+                                More Actions
+                              </DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>View/Edit</DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleDeleteSingle(article._id.toString())
+                                }
+                              >
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {[...Array(20)].map((_, index) => (
+                      <TableRow key={index} className="w-4/4">
+                        <TableCell className="px-4">
+                          <Checkbox checked={false} disabled />
+                        </TableCell>
+                        <TableCell className="px-4 w-4/6">
+                          <Skeleton className="h-4 w-full rounded-full" />
+                        </TableCell>
+                        <TableCell className=" hidden sm:flex  sm:w-3/6">
+                          <Skeleton className="h-4 w-full rounded-full" />
+                        </TableCell>
+                        <TableCell className="px-4 justify-self-end">
+                          <DotsHorizontalIcon />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                )}
+              </TableBody>
+            </Table>
+            <div className="text-sm px-4 py-2 border border-t-0 rounded-b-lg">
+              <PaginationDemo
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="text-red-500 w-full text-center p-2">
+              Error: {error}
+            </div>
+          </>
+        )}
+      </div>
+      {/* )} */}
     </div>
   );
 };

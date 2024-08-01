@@ -12,14 +12,21 @@ import { MountainIcon, MenuIcon } from "@/components/ui/icon";
 import { navItem } from "@/lib/types";
 
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 export default function Header() {
+  const [openSheet, setOpenSheet] = useState(Boolean);
   let location = useLocation();
   let currentNavItem = navItem.find((item) => item.link === location.pathname);
   let currentTitle = currentNavItem ? currentNavItem.title : "Dashboard";
   return (
     <>
       <header className="header  h-14 xs:h-12 relative flex items-center	px-4 py-0 justify-between xs:px-2 z-30">
-        <Sheet>
+        <Sheet
+          open={openSheet}
+          onOpenChange={() => {
+            setOpenSheet((prev) => !prev);
+          }}
+        >
           <div className="flex text-xl font-bold items-center gap-3">
             <SheetTrigger asChild>
               <Button size="icon" variant="ghost" className="md:hidden">
@@ -62,6 +69,9 @@ export default function Header() {
                       ? "text-foreground"
                       : "text-muted-foreground  hover:text-foreground"
                   }`}
+                  onClick={() => {
+                    setOpenSheet(true ? false : true);
+                  }}
                 >
                   <item.icon className="h-5 w-5" />
                   <span className="pl-4">{item.title}</span>
