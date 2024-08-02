@@ -147,7 +147,7 @@ const ArticleList: React.FC = () => {
       "selectedIds",
       JSON.stringify(Array.from(updatedSelectedIds))
     );
-    console.log("Selected IDs:", Array.from(updatedSelectedIds)); // Log the updated IDs
+    // console.log("Selected IDs:", Array.from(updatedSelectedIds)); // Log the updated IDs
   };
 
   const handleHeaderCheckboxChange = (checked: boolean) => {
@@ -309,15 +309,27 @@ const ArticleList: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {!loading ? (
+                {loading ? (
                   <>
-                    {articles.length == 0 && (
-                      <TableRow>
-                        <TableCell className="p-2 text-center">
-                          Not Found
+                    {[...Array(20)].map((_, index) => (
+                      <TableRow key={index} className="w-4/4">
+                        <TableCell className="px-4">
+                          <Checkbox checked={false} disabled />
+                        </TableCell>
+                        <TableCell className="px-4 w-4/6">
+                          <Skeleton className="h-4 w-full rounded-full" />
+                        </TableCell>
+                        <TableCell className=" hidden sm:flex  sm:w-3/6">
+                          <Skeleton className="h-4 w-full rounded-full" />
+                        </TableCell>
+                        <TableCell className="px-4 justify-self-end">
+                          <DotsHorizontalIcon />
                         </TableCell>
                       </TableRow>
-                    )}
+                    ))}
+                  </>
+                ) : (
+                  <>
                     {articles.map((article) => (
                       <TableRow
                         key={article._id}
@@ -367,25 +379,6 @@ const ArticleList: React.FC = () => {
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {[...Array(20)].map((_, index) => (
-                      <TableRow key={index} className="w-4/4">
-                        <TableCell className="px-4">
-                          <Checkbox checked={false} disabled />
-                        </TableCell>
-                        <TableCell className="px-4 w-4/6">
-                          <Skeleton className="h-4 w-full rounded-full" />
-                        </TableCell>
-                        <TableCell className=" hidden sm:flex  sm:w-3/6">
-                          <Skeleton className="h-4 w-full rounded-full" />
-                        </TableCell>
-                        <TableCell className="px-4 justify-self-end">
-                          <DotsHorizontalIcon />
                         </TableCell>
                       </TableRow>
                     ))}

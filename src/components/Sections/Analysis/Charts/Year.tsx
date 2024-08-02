@@ -5,7 +5,7 @@ import { DataType } from "@/lib/types";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -32,9 +32,7 @@ interface YearChartProps {
   articles: DataType[];
 }
 
-const YearChart: React.FC<YearChartProps> = ({
-  articles,
-}) => {
+const YearChart: React.FC<YearChartProps> = ({ articles }) => {
   const [selectedRange, setSelectedRange] = useState<string | null>(null);
 
   const aggregatedData: Record<string, { startYear: number; endYear: number }> =
@@ -94,14 +92,11 @@ const YearChart: React.FC<YearChartProps> = ({
   );
 
   return (
-    <Card>
+    <Card className=" w-full">
       <CardHeader>
         <div className="flex justify-between items-start gap-2">
           <div className="flex flex-col gap-1">
             <CardTitle>Year Wise Chart</CardTitle>
-            <CardDescription>
-              Showing total blogs for the selected years
-            </CardDescription>
           </div>
 
           <Selectyear options={rangeOptions} onChange={setSelectedRange} />
@@ -109,11 +104,7 @@ const YearChart: React.FC<YearChartProps> = ({
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-           
-          >
+          <AreaChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="year"
@@ -167,6 +158,11 @@ const YearChart: React.FC<YearChartProps> = ({
           </AreaChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter>
+        <div className="w-full flex text-center items-center justify-center text-sm leading-none text-muted-foreground">
+          Showing total blogs for the selected years
+        </div>
+      </CardFooter>
     </Card>
   );
 };
